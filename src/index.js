@@ -1,28 +1,53 @@
 module.exports = function toReadable(number) {
-  const unit = [
-    'zero', 'one', 'two', 'three', 'four',
-    'five', 'six', 'seven', 'eight', 'nine',
-    'ten', 'eleven', 'twelve', 'thirteen', 'fourteen',
-    'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'
+  const one = [
+    'zero',
+    'one',
+    'two',
+    'three',
+    'four',
+    'five',
+    'six',
+    'seven',
+    'eight',
+    'nine',
+    'ten',
+    'eleven',
+    'twelve',
+    'thirteen',
+    'fourteen',
+    'fifteen',
+    'sixteen',
+    'seventeen',
+    'eighteen',
+    'nineteen',
   ];
 
-  const tens = [
-    '', '', 'twenty', 'thirty', 'forty',
-    'fifty', 'sixty', 'seventy', 'eighty', 'ninety'
+  const ten = [
+    '',
+    '',
+    'twenty',
+    'thirty',
+    'forty',
+    'fifty',
+    'sixty',
+    'seventy',
+    'eighty',
+    'ninety',
   ];
 
   if (number < 20) {
-    return unit[number];
+    return one[number];
   }
 
   if (number < 100) {
-    const ten = Math.floor(number / 10);
-    const units = number % 10;
-    return tens[ten] + (units ? ' ' + unit[unit] : '');
+    const tens = Math.floor(number / 10);
+    const unit = number % 10;
+    return unit === 0 ? ten[tens] : `${ten[tens]} ${one[unit]}`;
   }
 
   const hundred = Math.floor(number / 100);
   const rest = number % 100;
-  const restReadable = rest ? ' ' + toReadable(rest) : '';
-  return unit[hundred] + ' hundred' + restReadable;
+  const restStr = rest === 0 ? '' : ` ${toReadable(rest)}`;
+
+  return `${one[hundred]} hundred${restStr}`;
 };
